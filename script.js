@@ -1,50 +1,11 @@
 // START FUNCTION
 let startInterval;
 let i = 0;
-function startIntervalRun() {
-  document.querySelector('.speech-bubble').innerText = startRandomText[i];
-  i !== 5 ? i++ : i = 0;
-}
-const startRandomText = [
-  'Czy prawda cię zatrwoży?',
-  'Me słowo krew ci zmrozi?',
-  'Czy Slytherin?  Czy Gryffindor?',
-  'Czy Hufflepuff? Czy Ravenclaw?',
-  'Ciesz się, dziecino, fach swój znam.',
-  'Nawet gdy smutek najpierw dam.'
-];
-
 startInterval = setInterval(startIntervalRun, 2000);
 
-
 // ASSIGN FUNCTION
-let persons = [
-  {name: 'Kamil1', points: 10},
-  {name: 'Kamil2', points: 20},
-  {name: 'Kamil3', points: 30},
-  {name: 'Kamil4', points: 40},
-  {name: 'Kamil5', points: 50},
-  {name: 'Kamil6', points: 60},
-  {name: 'Kamil7', points: 70},
-  {name: 'Kamil8', points: 80},
-  {name: 'Kamil9', points: 90},
-  {name: 'Kamil10', points: 100},
-  {name: 'Kamil11', points: 90},
-  {name: 'Kamil12', points: 80},
-  {name: 'Kamil13', points: 70},
-  {name: 'Kamil14', points: 60},
-  {name: 'Kamil15', points: 50},
-  {name: 'Kamil16', points: 40}
-];
 (function () {
-  const inverseNumber = (number) => {
-    if (number === 1) {return 4}
-    if (number === 2) {return 3}
-    if (number === 3) {return 2}
-    if (number === 4) {return 1}
-  };
-
-  const sortedPersons = persons.sort((a,b) => {
+  const sortedPersons = persons.sort((a, b) => {
     const pointsA = a.points;
     const pointsB = b.points;
     if (pointsA > pointsB) {
@@ -65,7 +26,7 @@ let persons = [
 
     switch (number) {
       case 1:
-        person.house = "gryfindor";
+        person.house = "gryffindor";
         break;
       case 2:
         person.house = "slytherin";
@@ -83,59 +44,90 @@ let persons = [
   persons = sortedPersons;
 })();
 
-
 // CLICK HANDLER
-const randomText = [
-  'Hmmmmm ...',
-  'Ale fryzura ...',
-  'Dziwny kształt głowy ...',
-  'Ciekawe co dzisiaj na obiad ...',
-  'Co by tu by ...',
-  'Ence pence ...',
-  'Ene due rabe ...'
-];
+
 
 document.querySelector('#submit').addEventListener('click', event => {
   event.preventDefault();
+  const randomTextPerson = [...randomText];
   const inputValue = document.querySelector('input').value;
   const person = persons.find(person => person.name.toLowerCase() === inputValue.toLowerCase());
+
+  if (!person) {
+    return alert('On(a) nie ma tak na imię!')
+  }
+
   document.querySelector('input').value = '';
   document.querySelector('input').disabled = true;
 
-  if (!person) {
-    alert('On(a) nie ma tak na imię!')
-  }
-
-  randomText.push(`${person.name} ${person.name} ${person.name}...`);
-  randomText.push(`Co by tu z Tobą zrobić ${person.name}?`);
+  randomTextPerson.push(`${person.name} ${person.name} ${person.name}...`);
+  randomTextPerson.push(`Co by tu z Tobą zrobić ${person.name}?`);
   clearInterval(startInterval);
 
   const assignInterval = setInterval(() => {
-    document.querySelector('.speech-bubble').innerText = randomText[(Math.random()*8).toFixed()];
+    document.querySelector('.speech-bubble').innerText = randomTextPerson[(Math.random() * 11).toFixed()];
   }, 2000);
+
+  startSortingHatSpeech(person.house);
 
   setTimeout(() => {
     clearInterval(assignInterval);
     document.querySelector('.speech-bubble').innerText = `${person.house.toUpperCase()}!`;
     document.querySelector(`.${person.house}`).style.display = 'block';
 
-    const music = document.createElement('embed');
-    music.setAttribute('src', `${person.house}.ogg`);
-    music.setAttribute('autostart', `true`);
-    music.setAttribute('loop', `false`);
-    music.setAttribute('width', `0`);
-    music.setAttribute('height', `0`);
-
-    document.querySelector('body').appendChild(music);
-  }, 10000);
+  }, getTimeoutDuration(person.house));
 
   setTimeout(() => {
     startInterval = setInterval(startIntervalRun, 2000);
     document.querySelectorAll('.house').forEach(el => el.style.display = 'none');
     document.querySelector('input').disabled = false;
     document.querySelector('.speech-bubble').innerText = '';
-    document.querySelector('embed').remove();
-  }, 15000);
+    document.querySelector('embed[loop=false]').remove();
+  }, getTimeoutDuration(person.house) + 5000);
 
 });
 
+// FUNCTIONS
+
+function inverseNumber(number) {
+  if (number === 1) {
+    return 4
+  }
+  if (number === 2) {
+    return 3
+  }
+  if (number === 3) {
+    return 2
+  }
+  if (number === 4) {
+    return 1
+  }
+}
+
+function startIntervalRun() {
+  document.querySelector('.speech-bubble').innerText = sortingHatDefaultSong[i];
+  i !== 5 ? i++ : i = 0;
+}
+
+function startSortingHatSpeech(house) {
+  const music = document.createElement('embed');
+  music.setAttribute('src', `audio/${house}.mp3`);
+  music.setAttribute('autostart', `true`);
+  music.setAttribute('loop', `false`);
+  music.setAttribute('width', `0`);
+  music.setAttribute('height', `0`);
+  document.querySelector('body').appendChild(music);
+}
+
+function getTimeoutDuration(house) {
+  switch (house) {
+    case "gryffindor":
+      return 20000;
+    case "slytherin":
+      return 20000;
+    case "hufflepuff":
+      return 18000;
+    case "ravenclaw":
+      return 24000;
+  }
+}
