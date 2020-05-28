@@ -38,7 +38,12 @@ startInterval = setInterval(startIntervalRun, 2000);
         person.house = "ravenclaw";
         break;
     }
-    j !== 4 ? j++ : j = 1;
+
+    if (NUMBER_OF_TEAMS === 2) {
+        j !== 2 ? j++ : j = 1;
+    } else {
+        j !== 4 ? j++ : j = 1;
+    }
   });
 
   persons = sortedPersons;
@@ -82,7 +87,9 @@ document.querySelector('#submit').addEventListener('click', event => {
     document.querySelectorAll('.house').forEach(el => el.style.display = 'none');
     document.querySelector('input').disabled = false;
     document.querySelector('.speech-bubble').innerText = '';
-    document.querySelector('embed[loop=false]').remove();
+    document.querySelector('#hat-speech').remove();
+    document.querySelector('#theme').muted = false;
+    document.querySelector('#theme').play();
   }, getTimeoutDuration(person.house) + 5000);
 
 });
@@ -91,10 +98,10 @@ document.querySelector('#submit').addEventListener('click', event => {
 
 function inverseNumber(number) {
   if (number === 1) {
-    return 4
+    return NUMBER_OF_TEAMS === 2 ? 2 : 4
   }
   if (number === 2) {
-    return 3
+    return NUMBER_OF_TEAMS === 1 ? 2 : 3
   }
   if (number === 3) {
     return 2
@@ -110,12 +117,12 @@ function startIntervalRun() {
 }
 
 function startSortingHatSpeech(house) {
-  const music = document.createElement('embed');
-  music.setAttribute('src', `audio/${house}.mp3`);
-  music.setAttribute('autostart', `true`);
-  music.setAttribute('loop', `false`);
-  music.setAttribute('width', `0`);
-  music.setAttribute('height', `0`);
+  document.querySelector('#theme').muted = true;
+  document.querySelector('#theme').pause();
+  const music = document.createElement('audio');
+  music.setAttribute('src', `./audio/${house}.mp3`);
+  music.setAttribute('autoplay', `true`);
+  music.setAttribute('id', `hat-speech`);
   document.querySelector('body').appendChild(music);
 }
 

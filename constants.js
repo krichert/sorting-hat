@@ -20,21 +20,23 @@ const sortingHatDefaultSong = [
   'Nawet gdy smutek najpierw dam.'
 ];
 
+const NUMBER_OF_TEAMS = 2;
+
 let persons = [
-  {name: 'Kamil', points: 10},
-  {name: 'Paweł', points: 20},
-  {name: 'Łukasz', points: 30},
-  {name: 'Marta', points: 40},
-  {name: 'Tatiana', points: 50},
-  {name: 'Kamil6', points: 60},
-  {name: 'Kamil7', points: 70},
-  {name: 'Kamil8', points: 80},
-  {name: 'Kamil9', points: 90},
-  {name: 'Kamil10', points: 100},
-  {name: 'Kamil11', points: 90},
-  {name: 'Kamil12', points: 80},
-  {name: 'Kamil13', points: 70},
-  {name: 'Kamil14', points: 60},
-  {name: 'Kamil15', points: 50},
-  {name: 'Kamil16', points: 40}
+  {name: 'Kamil', points: 1},
+  {name: 'Paweł', points: 2},
+  {name: 'Łukasz', points: 3},
+  {name: 'Marta', points: 4},
+  {name: 'Tatiana', points: 5},
+  {name: 'Kamil6', points: 6},
+  {name: 'Kamil7', points: 7},
+  {name: 'Kamil8', points: 8},
+  {name: 'Kamil9', points: 9},
+  {name: 'Kamil10', points: 10},
+  {name: 'Kamil11', points: 11},
+  {name: 'Kamil12', points: 12},
+  {name: 'Kamil13', points: 13},
+  {name: 'Kamil14', points: 14},
+  {name: 'Kamil15', points: 15},
+  {name: 'Kamil16', points: 16}
 ];
